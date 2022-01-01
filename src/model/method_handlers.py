@@ -62,8 +62,7 @@ def update_item(name, price, quantity):
         i, item_to_update = idxs_items[0][0], idxs_items[0][1]
         items[i] = {'name': name, 'price': price, 'quantity': quantity}
     else:
-        raise exceptions.PathNotStored(
-            'Can\'t update "{}" because it\'s not stored'.format(name))
+        raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(name))
 
 
 ''' GET
@@ -88,8 +87,7 @@ def read_item(name):
     if myitems:
         return myitems[0] # 0th index is always ok because no duplicates
     else:
-        raise exceptions.PathNotStored(
-            'Can\'t read "{}" because it\'s not stored'.format(name))
+        raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(name))
 
 
 

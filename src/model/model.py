@@ -4,7 +4,7 @@ sys.path.append('./method_handlers')
 import exceptions
 
 
-class ModelBasic(object):
+class Model(object):
 
     def __init__(self, application_items):
         self.create_items(application_items)

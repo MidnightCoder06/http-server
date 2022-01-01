@@ -1,6 +1,8 @@
 
+'''
 class APIGateway:
     # responsible for receiving all incoming HTTP requests
+    # creates route object
     # checks for mataching route and dispatches the appropriate controller action
 
     def handle_request(self, method_name, path, req):
@@ -14,7 +16,7 @@ class APIGateway:
 
     def dispatch(self, route, params, req):
         pass
-
+'''
 
 
 # The Controller accepts user’s inputs and delegates data representation to the View and data handling to the Model.
@@ -80,3 +82,12 @@ class Controller(object):
             self.view.display_item_deletion(name)
         except mvc_exc.ItemNotStored as e:
             self.view.display_item_not_yet_stored_error(name, item_type, e)
+
+if __name__ == "__main__":
+    my_items = [
+        {'name': 'bread', 'price': 0.5, 'quantity': 20},
+        {'name': 'milk', 'price': 1.0, 'quantity': 10},
+        {'name': 'wine', 'price': 10.0, 'quantity': 5},
+    ]
+
+    c = Controller(Model(my_items), View())

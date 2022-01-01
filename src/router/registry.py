@@ -1,19 +1,14 @@
-# Singleton
+import sys
+sys.path.append('../utils')
+import exceptions
+
 class Registry:
     def __init__(self):
         self.acceptable_method_names = ["GET", "PUT", "DELETE"]
-        self.paths = []
 
-    def match():
-        if _ in self.acceptable_method_names:
+    # input: custom route object
+    def match(route):
+        if route.method_name in self.acceptable_method_names:
             pass
         else:
-            raise `unknow http method ${request_method}`
-
-    def add_new_path():
-        route = Route()
-        self.paths.append(route)
-
-    # for delete method
-    def path_exists(path):
-        return path in self.paths
+            raise exceptions.UnknownHTTPMethod('unknown http method: {}'.format(route.method_name))
