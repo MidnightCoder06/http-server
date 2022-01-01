@@ -18,7 +18,7 @@ class APIGateway:
 
 
 # The Controller accepts user’s inputs and delegates data representation to the View and data handling to the Model.
-    # the view can be the json & status code you return?
+    # the view can be the json & status code you return!
 
 class Controller(object):
 

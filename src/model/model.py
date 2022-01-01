@@ -7,16 +7,7 @@ import exceptions
 class ModelBasic(object):
 
     def __init__(self, application_items):
-        self._item_type = 'product' # change to route type
         self.create_items(application_items)
-
-    @property
-    def item_type(self):
-        return self._item_type
-
-    @item_type.setter
-    def item_type(self, new_item_type):
-        self._item_type = new_item_type
 
     def create_item(self, name, price, quantity):
         method_handlers.create_item(name, price, quantity)

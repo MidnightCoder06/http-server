@@ -3,10 +3,14 @@
 
 import sys
 sys.path.append('../utils')
+sys.path.append('./repository')
 import exceptions
+import repository
 
 # https://www.programiz.com/python-programming/methods/built-in/list
 items = list()  # global variable where we keep the data -> the repoisitory should store all the paths
+
+storage = repository.Repository()
 
 
 # root path
@@ -16,6 +20,12 @@ def create_items(app_items): # have this be the initial '/'
 
 ''' PUT
 '''
+
+def put(route):
+    global storage
+    print('put')
+    print(storage.data)
+
 
 # Create
 def create_item(name, price, quantity):
@@ -58,6 +68,9 @@ def update_item(name, price, quantity):
 
 ''' GET
 '''
+def get(route):
+    global storage
+    print('get')
 
 
 '''
@@ -80,7 +93,14 @@ def read_item(name):
 
 
 
-# Delete
+''' DELETE
+'''
+
+def delete(route):
+    global storage
+    print('delete')
+
+
 '''
 items = [
         {'name': 'bread', 'price': 0.5, 'quantity': 20},
@@ -149,4 +169,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    put('temp fake custom route object')
+    get('temp fake custom route object')
+    delete('temp fake custom route object')

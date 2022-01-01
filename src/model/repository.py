@@ -1,2 +1,9 @@
-# this should store all the paths
-data = list()
+# This class stores all the paths
+
+# dictionary definition
+    # key: repoisitory path: string
+    # value: object id: string
+class Repository:
+    def __init__(self):
+        self.data = {}
+        self.data['/'] = ''
