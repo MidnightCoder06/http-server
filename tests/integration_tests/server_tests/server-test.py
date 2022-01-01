@@ -1,3 +1,7 @@
+# maybe put the view code from the tutorial here?
+
+
+
 class Server:
     def __init__(self):
         self.database = Database()

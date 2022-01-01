@@ -26,3 +26,6 @@ https://www.freecodecamp.org/news/how-to-interact-with-web-services-using-python
 Gateway benifits
 - reduces roundtrip
 - security layer
+
+
+Keep in mind that we have to use a global variable to store the list of items because its state must be shared across all operations.
