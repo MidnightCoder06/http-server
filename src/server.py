@@ -4,15 +4,11 @@ import './src/controller/route'
 import './src/router/registry'
 import './src/route'
 
-# this should simply be a wrapper around the Controller (api gateway)
+# wrapper around the api gateway
 class Server
     def __init__(self):
-        self.database = Database()
-
-  def __call__(self):
-    req = Route(path)
-    request_method = req.method()
-    gateway.handle(request_method, path, req)
+        self.gateway = APIGateway()
 
 if __name__ == "__main__":
-  app = Server()
+  server = Server()
+  # you would pass requests in here -> server.handle_request('PUT /data/{repository}')

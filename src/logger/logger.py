@@ -3,29 +3,24 @@ import sys
 sys.path.append('./logs_database')
 import logs_database
 
+class Logger():
+    def __init__(self):
+        # access database
+        logs = logs_database.LogsDatabase().logs
 
-# access database
-logs = logs_database.LogsDatabase().logs
+    # dictionary definition
+        # key: timestamp: string
+        # value: request: string
+    def log(self, route):
+        # Getting the current date and time
+        dt = datetime.now()
+        # generating the timestamp
+        ts = int(datetime.timestamp(dt))
+        print(ts)
 
-# path parameter is the path property of the custom Route object from route.py
+        # build log
+        log = {}
+        log[ts] = { 'method_name': route.method_name, 'path': route.path }
 
-# dictionary definition
-    # key: timestamp: string
-    # value: request: string
-def log(path):
-    # Getting the current date and time
-    dt = datetime.now()
-    # generating the timestamp
-    ts = int(datetime.timestamp(dt))
-    print(ts)
-
-    # build log
-    log = {}
-    log[ts] = path
-
-    # insert into database
-    logs.append(log)
-
-if __name__ == '__main__':
-    log('fake path')
-    print(logs)
+        # insert into database
+        logs.append(log)
