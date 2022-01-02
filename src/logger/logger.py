@@ -6,7 +6,7 @@ import logs_database
 class Logger():
     def __init__(self):
         # access database
-        logs = logs_database.LogsDatabase().logs
+        self.logs = logs_database.LogsDatabase().logs
 
     # dictionary definition
         # key: timestamp: string
@@ -20,7 +20,9 @@ class Logger():
 
         # build log
         log = {}
-        log[ts] = { 'method_name': route.method_name, 'path': route.path }
+        #print('route from logger', route.route) # {'generated_object_id': 254308434888230271491368054014250336739, 'method_name': 'PUT ', 'repository_path': '{repository}'}
+        #print(type(route.route)) # <class 'dict'>
+        log[ts] = { 'method_name': route.route['method_name'], 'path': route.route['repository_path'] }
 
         # insert into database
-        logs.append(log)
+        self.logs.append(log)

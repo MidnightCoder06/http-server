@@ -6,9 +6,6 @@ import exceptions
 
 class Model(object):
 
-    def __init__(self, application_items):
-        self.create_items(application_items)
-
     def create_item(self, name, price, quantity):
         method_handlers.create_item(name, price, quantity)
 

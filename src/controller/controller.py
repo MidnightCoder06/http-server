@@ -1,5 +1,8 @@
 import sys
 sys.path.append('../model')
+import model
+sys.path.append('../view')
+import request_response
 
 # The Controller accepts user’s inputs and delegates data responses to the View and data processing to the Model.
 class Controller(object):
@@ -7,6 +10,15 @@ class Controller(object):
     def __init__(self, model, view):
         self.model = model
         self.view = view
+
+    def put(self, route):
+        print('put from controller')
+
+    def get(self, route):
+        print('get from controller')
+
+    def delete(self, route):
+        print('delete from controller')
 
     def show_items(self, bullet_points=False):
         items = self.model.read_items()
@@ -64,10 +76,4 @@ class Controller(object):
             self.view.display_item_not_yet_stored_error(name, item_type, e)
 
 if __name__ == "__main__":
-    my_items = [
-        {'name': 'bread', 'price': 0.5, 'quantity': 20},
-        {'name': 'milk', 'price': 1.0, 'quantity': 10},
-        {'name': 'wine', 'price': 10.0, 'quantity': 5},
-    ]
-
-    c = Controller(Model(), View())
+    c = Controller(model.Model(), request_response.View())
