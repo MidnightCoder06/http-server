@@ -4,13 +4,10 @@ import './src/controller/route'
 import './src/router/registry'
 import './src/route'
 
+# this should simply be a wrapper around the Controller (api gateway)
 class Server
     def __init__(self):
         self.database = Database()
-        self.cache = Cache()
-
-  def get(path):
-    return ['200 OK', {}, []]
 
   def __call__(self):
     req = Route(path)
