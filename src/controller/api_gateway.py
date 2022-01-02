@@ -23,17 +23,19 @@ class APIGateway:
 
     def handle_request(self, req):
         match = self.registry.match(req)
+        # print('match from api gateway', match)
         if match:
             parsed_route = route.Route(req)
             self.logger.log(parsed_route)
             self.dispatch(parsed_route.route)
 
     def dispatch(self, route):
-        if route['method_name'] == 'put':
+        # print('route from dispatch', route)
+        if route['method_name'] == 'PUT ':
             self.controller.put(route)
-        if route['method_name'] == 'get':
+        if route['method_name'] == 'GET ':
             self.controller.get(route)
-        if route['method_name'] == 'delete':
+        if route['method_name'] == 'DELETE ':
             self.controller.delete(route)
 
 if __name__ == '__main__':
