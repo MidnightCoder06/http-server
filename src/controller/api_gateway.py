@@ -1,9 +1,14 @@
+import controller # you don't need to import if in the same folder
 import sys
-sys.path.append('../router')
-import registry
+sys.path.append('../router') # you append the folder, not the file
+import registry # import the file
 import route
 sys.path.append('../logger')
 import logger
+sys.path.append('../model')
+import model
+sys.path.append('../view')
+import request_response
 
 
 class APIGateway:
@@ -12,9 +17,9 @@ class APIGateway:
     # checks for mataching route and dispatches the route to the controller
     # calls the logger
     def __init__(self):
-        self.registry = Registry()
-        self.logger = Logger()
-        self.controller = Controller(Model(), View())
+        self.registry = registry.Registry()
+        self.logger = logger.Logger()
+        self.controller = controller.Controller(model.Model(), request_response.View())
 
     def handle_request(self, req):
         match = self.registry.match(req)
@@ -29,4 +34,7 @@ class APIGateway:
         if route.method_name == 'get':
             pass # call the proper controller method
         if route.method_name == 'delete':
-            pass # call the proper controller method 
+            pass # call the proper controller method
+
+if __name__ == '__main__':
+    blah = APIGateway()

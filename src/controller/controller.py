@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../model')
+
 # The Controller accepts user’s inputs and delegates data responses to the View and data processing to the Model.
 class Controller(object):
 
