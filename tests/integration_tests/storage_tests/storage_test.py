@@ -1,2 +1,2 @@
 
-# this test the caching mechanisms 
+# check database (repo) & the logs 

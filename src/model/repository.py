@@ -6,4 +6,4 @@
 class Repository:
     def __init__(self):
         self.data = {}
-        self.data['/'] = ''
+        self.data['/'] = 'index.html'

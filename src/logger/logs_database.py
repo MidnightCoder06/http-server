@@ -1,2 +1,5 @@
-logs = {}
-# look up a data structure that makes sense for logs
+# This class stores all the logs
+
+class LogsDatabase:
+    def __init__(self):
+        self.logs = list()
