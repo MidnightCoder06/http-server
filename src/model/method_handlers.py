@@ -1,22 +1,81 @@
-# returns all the status codes here by calling the view
-    # 200, 400 and blah blah
-
 import sys
 sys.path.append('../utils')
 sys.path.append('./repository')
 import exceptions
 import repository
 
-# https://www.programiz.com/python-programming/methods/built-in/list
-items = list()  # global variable where we keep the data -> the repoisitory should store all the paths
 
-storage = repository.Repository()
+storage = repository.Repository() # global variable where we keep the data
+
+''' GET
+'''
+def read_item(route):
+    global storage
+    route_in_list = [route]
+    data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
+    if data:
+        if data[0]['given_object_id']: # 0th index is always ok because no duplicates
+            print(data[0]['given_object_id'])
+        else:
+            print(data[0]['generated_object_id'])
+    else:
+        raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(route['repository_path']))
 
 
-# root path
-def create_items(app_items): # have this be the initial '/'
+
+##### get ^ is the working model ... replicate below 
+
+
+''' DELETE
+'''
+
+def delete(route):
+    global storage
+    print('delete')
+
+
+'''
+items = [
+        {'name': 'bread', 'price': 0.5, 'quantity': 20},
+        {'name': 'milk', 'price': 1.0, 'quantity': 10},
+        {'name': 'wine', 'price': 10.0, 'quantity': 5},
+    ]
+name = 'bread'
+idxs_items = list(filter(lambda i_x: i_x[1]['name'] == name, enumerate(items)))
+print(idxs_items)
+# [(0, {'name': 'bread', 'price': 0.5, 'quantity': 20})]
+
+i, item_to_delete = idxs_items[0][0], idxs_items[0][1]
+print(i) # 0
+print(item_to_delete) # {'name': 'bread', 'price': 0.5, 'quantity': 20}
+'''
+def delete_item(name):
     global items
-    items = app_items
+    idxs_items = list(filter(lambda i_x: i_x[1]['name'] == name, enumerate(items)))
+    if idxs_items:
+        i, item_to_delete = idxs_items[0][0], idxs_items[0][1] # only deletes at index 0 because there are no duplicates
+        del items[i]
+    else:
+        raise exceptions.PathNotStored(
+            'Can\'t delete "{}" because it\'s not stored'.format(name))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ''' PUT
 '''
@@ -65,64 +124,6 @@ def update_item(name, price, quantity):
         raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(name))
 
 
-''' GET
-'''
-def get(route):
-    global storage
-    print('get')
-
-
-'''
-sample_list = ["hello", "world"]
-sample_word = "hello"
-new_items = filter(lambda x: x[:] == "hello", sample_list)
-# x represents each index in the list
-    # you could do x : x[0] == "h" and the result would be the same
-print(new_items) # <filter object at 0x7f9c1675ad90>
-print(list(new_items)) # ['hello']
-'''
-def read_item(name):
-    global items
-    myitems = list(filter(lambda x: x['name'] == name, items))
-    if myitems:
-        return myitems[0] # 0th index is always ok because no duplicates
-    else:
-        raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(name))
-
-
-
-''' DELETE
-'''
-
-def delete(route):
-    global storage
-    print('delete')
-
-
-'''
-items = [
-        {'name': 'bread', 'price': 0.5, 'quantity': 20},
-        {'name': 'milk', 'price': 1.0, 'quantity': 10},
-        {'name': 'wine', 'price': 10.0, 'quantity': 5},
-    ]
-name = 'bread'
-idxs_items = list(filter(lambda i_x: i_x[1]['name'] == name, enumerate(items)))
-print(idxs_items)
-# [(0, {'name': 'bread', 'price': 0.5, 'quantity': 20})]
-
-i, item_to_delete = idxs_items[0][0], idxs_items[0][1]
-print(i) # 0
-print(item_to_delete) # {'name': 'bread', 'price': 0.5, 'quantity': 20}
-'''
-def delete_item(name):
-    global items
-    idxs_items = list(filter(lambda i_x: i_x[1]['name'] == name, enumerate(items)))
-    if idxs_items:
-        i, item_to_delete = idxs_items[0][0], idxs_items[0][1] # only deletes at index 0 because there are no duplicates
-        del items[i]
-    else:
-        raise exceptions.PathNotStored(
-            'Can\'t delete "{}" because it\'s not stored'.format(name))
 
 
 

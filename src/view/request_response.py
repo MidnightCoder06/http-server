@@ -9,6 +9,7 @@ class View(object):
         response['Status'] = '201 Created'
         response['oid'] = route.uuid
         print(response)
+        return response
 
     @staticmethod
     def ok():
@@ -16,15 +17,18 @@ class View(object):
         response['Status'] = '200 OK'
         response['oid'] = route.uuid
         print(response)
+        return response
 
     @staticmethod
     def delete():
         response = {}
         response['Status'] = '200 OK'
         print(response)
+        return response
 
     @staticmethod
     def not_found():
         response = {}
         response['Status'] = '404 Not Found'
         print(response)
+        return response

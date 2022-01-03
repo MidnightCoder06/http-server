@@ -3,6 +3,8 @@ sys.path.append('../model')
 import model
 sys.path.append('../view')
 import request_response
+sys.path.append('../utils')
+import exceptions
 
 # The Controller accepts user’s inputs and delegates data responses to the View and data processing to the Model.
 class Controller(object):
@@ -11,69 +13,33 @@ class Controller(object):
         self.model = model
         self.view = view
 
-    def put(self, route):
-        print('put from controller')
-
     def get(self, route):
-        print('get from controller')
+        # print('get from controller', route) # {'generated_object_id': 132215354869378055163192969691540242915, 'method_name': 'GET ', 'repository_path': '{repository}', 'given_object_id': '{objectID}'}
+        try:
+            item = self.model.read_item(route)
+            self.view.ok()
+        except exceptions.PathNotStored:
+            self.view.not_found()
 
     def delete(self, route):
-        print('delete from controller')
-
-    def show_items(self, bullet_points=False):
-        items = self.model.read_items()
-        item_type = self.model.item_type
-        if bullet_points:
-            self.view.show_bullet_point_list(item_type, items)
-        else:
-            self.view.show_number_point_list(item_type, items)
-
-    def show_item(self, item_name):
+        # print('delete from controller', route) # {'generated_object_id': 132215431720695693999600435429172068835, 'method_name': 'DELETE ', 'repository_path': '{repository}', 'given_object_id': '{objectID}'}
         try:
-            item = self.model.read_item(item_name)
-            item_type = self.model.item_type
-            self.view.show_item(item_type, item_name, item)
-        except mvc_exc.ItemNotStored as e:
-            self.view.display_missing_item_error(item_name, e)
+            self.model.delete_item(route)
+            self.view.ok()
+        except exceptions.PathNotStored:
+            self.view.not_found()
 
-    def insert_item(self, name, price, quantity):
-        assert price > 0, 'price must be greater than 0'
-        assert quantity >= 0, 'quantity must be greater than or equal to 0'
-        item_type = self.model.item_type
+    def put(self, route):
+        # print('put from controller', route) # {'generated_object_id': 132215105300666135230529550028096684515, 'method_name': 'PUT ', 'repository_path': '{repository}'}
         try:
-            self.model.create_item(name, price, quantity)
-            self.view.display_item_stored(name, item_type)
-        except mvc_exc.ItemAlreadyStored as e:
-            self.view.display_item_already_stored_error(name, item_type, e)
-
-    def update_item(self, name, price, quantity):
-        assert price > 0, 'price must be greater than 0'
-        assert quantity >= 0, 'quantity must be greater than or equal to 0'
-        item_type = self.model.item_type
-
-        try:
-            older = self.model.read_item(name)
-            self.model.update_item(name, price, quantity)
-            self.view.display_item_updated(
-                name, older['price'], older['quantity'], price, quantity)
-        except mvc_exc.ItemNotStored as e:
-            self.view.display_item_not_yet_stored_error(name, item_type, e)
-            # if the item is not yet stored and we performed an update, we have
-            # 2 options: do nothing or call insert_item to add it.
-            # self.insert_item(name, price, quantity)
-
-    def update_item_type(self, new_item_type):
-        old_item_type = self.model.item_type
-        self.model.item_type = new_item_type
-        self.view.display_change_item_type(old_item_type, new_item_type)
-
-    def delete_item(self, name):
-        item_type = self.model.item_type
-        try:
-            self.model.delete_item(name)
-            self.view.display_item_deletion(name)
-        except mvc_exc.ItemNotStored as e:
-            self.view.display_item_not_yet_stored_error(name, item_type, e)
+            # insert
+            self.model.create_item(route)
+            self.view.created(route)
+        except exceptions.PathAlreadyStored:
+            # replace
+            older = self.model.read_item(route)
+            self.model.update_item(route)
+            self.view.ok()
 
 if __name__ == "__main__":
     c = Controller(model.Model(), request_response.View())
