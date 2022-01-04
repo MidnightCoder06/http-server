@@ -109,47 +109,15 @@ def update_item(route):
         raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(route['repository_path']))
 
 
-# test function -> use an example for your storage test files
-def main():
-
-    my_items = [
-        {'name': 'bread', 'price': 0.5, 'quantity': 20},
-        {'name': 'milk', 'price': 1.0, 'quantity': 10},
-        {'name': 'wine', 'price': 10.0, 'quantity': 5},
-    ]
-
-    # CREATE
-    print(items)
-    create_item('beer', price=3.0, quantity=15)
-    print(items)
-    # if we try to re-create an object we get an PathAlreadyStored exception
-    # create_item('beer', price=2.0, quantity=10)
-
-    # READ
-    # if we try to read an object not stored we get an PathNotStored exception
-    # print('READ chocolate')
-    # print(read_item('chocolate'))
-    print('READ bread')
-    print(read_item('bread'))
-
-    # UPDATE
-    print('UPDATE bread')
-    update_item('bread', price=2.0, quantity=30)
-    print(read_item('bread'))
-    # if we try to update an object not stored we get an PathNotStored exception
-    #print('UPDATE chocolate')
-    #update_item('chocolate', price=10.0, quantity=20)
-
-    # DELETE
-    print('DELETE beer')
-    delete_item('beer')
-    # if we try to delete an object not stored we get an PathNotStored exception
-    # print('READ beer')
-    # print(read_item('beer'))
-
 
 if __name__ == "__main__":
-    # main()
-    put('temp fake custom route object')
-    get('temp fake custom route object')
-    delete('temp fake custom route object')
+    read_item()
+    delete()
+    create_item()
+    read_item()
+    delete()
+    read_item()
+    create_item()
+    read_item()
+    update_item()
+    read_item()
