@@ -16,15 +16,24 @@ def read_item(route):
     if data:
         if data[0]['given_object_id']: # 0th index is always ok because no duplicates
             print(data[0]['given_object_id'])
+            return data[0]['given_object_id']
         else:
             print(data[0]['generated_object_id'])
+            return data[0]['generated_object_id']
     else:
         raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(route['repository_path']))
 
 
-''' DELETE
+'''
+my_list = ['a', 'b', 'c']
+print(enumerate(my_list)) # <enumerate object at 0x7ff15f655b80>
+print(list(enumerate(my_list))) # [(0, 'a'), (1, 'b'), (2, 'c')]
 '''
 
+
+
+''' DELETE
+'''
 def delete(route):
     global storage
     route_in_list = [route]
@@ -50,28 +59,22 @@ print(i) # 0
 print(item_to_delete) # {'name': 'bread', 'price': 0.5, 'quantity': 20}
 '''
 
-##### get & delete ^ is the working model ... replicate below
-
-
-
 
 ''' PUT
 '''
-
-def put(route):
+# remember the controller handles the seperation of creating and updating so its good they are two different methods in this file
+def create_item(route):
     global storage
     print('put')
-    print(storage.data)
-
-
-# Create
-def create_item(name, price, quantity):
-    global items
-    results = list(filter(lambda x: x['name'] == name, items))
-    if results:
-        raise exceptions.PathAlreadyStored('"{}" already stored!'.format(name))
+    route_in_list = [route]
+    data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
+    if data:
+        raise exceptions.PathAlreadyStored('"{}" already stored!'.format(storage['repository_path']))
     else:
-        items.append({'name': name, 'price': price, 'quantity': quantity})
+        if data[0]['given_object_id']: # 0th index is always ok because no duplicates
+            storage['repository_path'] = route['given_object_id']
+        else:
+            storage['repository_path'] = route['generated_object_id']
 
 # Update
 '''
@@ -91,18 +94,19 @@ blah = list(enumerate(my_items))
 print(blah[1]) # (1, {'name': 'milk', 'price': 1.0, 'quantity': 10})
 print(blah[1][1]['name']) # milk
 '''
-def update_item(name, price, quantity):
-    global items
+def update_item(route):
+    global storage
+    route_in_list = [route]
     # https://www.programiz.com/python-programming/methods/built-in/enumerate
-    idxs_items = list(filter(lambda i_x: i_x[1]['name'] == name, enumerate(items)))
-    if idxs_items:
-        i, item_to_update = idxs_items[0][0], idxs_items[0][1]
-        items[i] = {'name': name, 'price': price, 'quantity': quantity}
+    idx_data = list(filter(lambda i_x: i_x[1]['repository_path'] in storage, enumerate(route_in_list)))
+    if idx_data:
+        # idx, item_to_update = idx_data[0][0], idx_data[0][1]
+        if data[0]['given_object_id']: # 0th index is always ok because no duplicates
+            storage['repository_path'] = route['given_object_id']
+        else:
+            storage['repository_path'] = route['generated_object_id']
     else:
-        raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(name))
-
-
-
+        raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(route['repository_path']))
 
 
 # test function -> use an example for your storage test files
@@ -115,7 +119,6 @@ def main():
     ]
 
     # CREATE
-    create_items(my_items) # have this be the initial '/'
     print(items)
     create_item('beer', price=3.0, quantity=15)
     print(items)
