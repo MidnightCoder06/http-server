@@ -22,18 +22,18 @@ def read_item(route):
         raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(route['repository_path']))
 
 
-
-##### get ^ is the working model ... replicate below 
-
-
 ''' DELETE
 '''
 
 def delete(route):
     global storage
-    print('delete')
-
-
+    route_in_list = [route]
+    idx_data = list(filter(lambda i_x: i_x[1]['repository_path'] in storage, enumerate(route_in_list)))
+    if idx_data:
+        i, item_to_delete = idx_data[0][0], idx_data[0][1] # only deletes at index 0 because there are no duplicates
+        del storage[i]
+    else:
+        raise exceptions.PathNotStored('Can\'t delete "{}" because it\'s not stored'.format(route['repository_path']))
 '''
 items = [
         {'name': 'bread', 'price': 0.5, 'quantity': 20},
@@ -49,30 +49,8 @@ i, item_to_delete = idxs_items[0][0], idxs_items[0][1]
 print(i) # 0
 print(item_to_delete) # {'name': 'bread', 'price': 0.5, 'quantity': 20}
 '''
-def delete_item(name):
-    global items
-    idxs_items = list(filter(lambda i_x: i_x[1]['name'] == name, enumerate(items)))
-    if idxs_items:
-        i, item_to_delete = idxs_items[0][0], idxs_items[0][1] # only deletes at index 0 because there are no duplicates
-        del items[i]
-    else:
-        raise exceptions.PathNotStored(
-            'Can\'t delete "{}" because it\'s not stored'.format(name))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##### get & delete ^ is the working model ... replicate below
 
 
 
