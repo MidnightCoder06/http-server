@@ -40,6 +40,7 @@ def delete(route):
     idx_data = list(filter(lambda i_x: i_x[1]['repository_path'] in storage, enumerate(route_in_list)))
     if idx_data:
         i, item_to_delete = idx_data[0][0], idx_data[0][1] # only deletes at index 0 because there are no duplicates
+        print('storage[i]')
         del storage[i]
     else:
         raise exceptions.PathNotStored('Can\'t delete "{}" because it\'s not stored'.format(route['repository_path']))
@@ -72,8 +73,10 @@ def create_item(route):
         raise exceptions.PathAlreadyStored('"{}" already stored!'.format(storage['repository_path']))
     else:
         if data[0]['given_object_id']: # 0th index is always ok because no duplicates
+            print('key: ', storage['repository_path'], 'value: ', route['given_object_id'])
             storage['repository_path'] = route['given_object_id']
         else:
+            print('key: ', storage['repository_path'], 'value: ', route['generated_object_id'])
             storage['repository_path'] = route['generated_object_id']
 
 # Update
@@ -111,13 +114,18 @@ def update_item(route):
 
 
 if __name__ == "__main__":
-    read_item()
-    delete()
-    create_item()
-    read_item()
-    delete()
-    read_item()
-    create_item()
-    read_item()
-    update_item()
-    read_item()
+
+    mock_get_arg = {'generated_object_id': 132215354869378055163192969691540242915, 'method_name': 'GET ', 'repository_path': '{repository}', 'given_object_id': '{objectID}'}
+    mock_delete_arg = {'generated_object_id': 132215431720695693999600435429172068835, 'method_name': 'DELETE ', 'repository_path': '{repository}', 'given_object_id': '{objectID}'}
+    mock_put_arg = {'generated_object_id': 132215105300666135230529550028096684515, 'method_name': 'PUT ', 'repository_path': '{repository}'}
+
+    # read_item(mock_get_arg)
+    # delete()
+    # create_item()
+    # read_item()
+    # delete()
+    # read_item()
+    # create_item()
+    # read_item()
+    # update_item()
+    # read_item()
