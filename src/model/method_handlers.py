@@ -5,7 +5,7 @@ import exceptions
 import repository
 
 
-storage = repository.Repository() # global variable where we keep the data
+storage = repository.Repository().data # global variable where we keep the data
 
 ''' GET
 '''
@@ -14,12 +14,9 @@ def read_item(route):
     route_in_list = [route]
     data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
     if data:
-        if data[0]['given_object_id']: # 0th index is always ok because no duplicates
-            print(data[0]['given_object_id'])
-            return data[0]['given_object_id']
-        else:
-            print(data[0]['generated_object_id'])
-            return data[0]['generated_object_id']
+        print('read', storage[route['repository_path']])
+        return storage[route['repository_path']]
+
     else:
         raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(route['repository_path']))
 
@@ -37,11 +34,11 @@ print(list(enumerate(my_list))) # [(0, 'a'), (1, 'b'), (2, 'c')]
 def delete(route):
     global storage
     route_in_list = [route]
-    idx_data = list(filter(lambda i_x: i_x[1]['repository_path'] in storage, enumerate(route_in_list)))
-    if idx_data:
-        i, item_to_delete = idx_data[0][0], idx_data[0][1] # only deletes at index 0 because there are no duplicates
-        print('storage[i]')
-        del storage[i]
+    data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
+    if data:
+        print('delete', route['repository_path'])
+        del storage[route['repository_path']]
+        print(storage)
     else:
         raise exceptions.PathNotStored('Can\'t delete "{}" because it\'s not stored'.format(route['repository_path']))
 '''
@@ -66,18 +63,18 @@ print(item_to_delete) # {'name': 'bread', 'price': 0.5, 'quantity': 20}
 # remember the controller handles the seperation of creating and updating so its good they are two different methods in this file
 def create_item(route):
     global storage
-    print('put')
+    print('put', storage)
     route_in_list = [route]
     data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
     if data:
         raise exceptions.PathAlreadyStored('"{}" already stored!'.format(storage['repository_path']))
     else:
-        if data[0]['given_object_id']: # 0th index is always ok because no duplicates
-            print('key: ', storage['repository_path'], 'value: ', route['given_object_id'])
-            storage['repository_path'] = route['given_object_id']
+        if 'given_object_id' in route:
+            storage[route['repository_path']] = route['given_object_id']
+            print('created 1', storage)
         else:
-            print('key: ', storage['repository_path'], 'value: ', route['generated_object_id'])
-            storage['repository_path'] = route['generated_object_id']
+            storage[route['repository_path']] = route['generated_object_id']
+            print('created 2', storage)
 
 # Update
 '''
@@ -100,14 +97,11 @@ print(blah[1][1]['name']) # milk
 def update_item(route):
     global storage
     route_in_list = [route]
-    # https://www.programiz.com/python-programming/methods/built-in/enumerate
-    idx_data = list(filter(lambda i_x: i_x[1]['repository_path'] in storage, enumerate(route_in_list)))
-    if idx_data:
-        # idx, item_to_update = idx_data[0][0], idx_data[0][1]
-        if data[0]['given_object_id']: # 0th index is always ok because no duplicates
-            storage['repository_path'] = route['given_object_id']
-        else:
-            storage['repository_path'] = route['generated_object_id']
+    data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
+    if data:
+        print('key: ', storage[route['repository_path']], 'value: ', route['given_object_id'])
+        storage[route['repository_path']] = route['given_object_id']
+        print('new storage', storage)
     else:
         raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(route['repository_path']))
 
@@ -119,13 +113,20 @@ if __name__ == "__main__":
     mock_delete_arg = {'generated_object_id': 132215431720695693999600435429172068835, 'method_name': 'DELETE ', 'repository_path': '{repository}', 'given_object_id': '{objectID}'}
     mock_put_arg = {'generated_object_id': 132215105300666135230529550028096684515, 'method_name': 'PUT ', 'repository_path': '{repository}'}
 
-    read_item(mock_get_arg)
-    # delete()
-    # create_item()
-    # read_item()
-    # delete()
-    # read_item()
-    # create_item()
-    # read_item()
-    # update_item()
-    # read_item()
+    mock_update_arg = {'method_name': 'PUT ', 'repository_path': '{repository}', 'given_object_id': '{new_object_id}'}
+
+
+    # read_item(mock_get_arg)
+    # delete(mock_delete_arg)
+
+    # create_item(mock_put_arg)
+    # read_item(mock_get_arg)
+    # delete(mock_delete_arg)
+    # read_item(mock_get_arg)
+
+    # update_item(mock_update_arg)
+
+    # create_item(mock_put_arg)
+    # read_item(mock_get_arg)
+    # update_item(mock_update_arg)
+    # read_item(mock_get_arg)
