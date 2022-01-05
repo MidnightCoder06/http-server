@@ -5,4 +5,4 @@
 class Repository:
     def __init__(self):
         self.data = {}
-        data['/'] = 'index.html'
+        self.data['/'] = 'index.html'
