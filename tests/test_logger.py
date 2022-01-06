@@ -1,25 +1,17 @@
 # cd tests
 # python -m test_logger
-'''
-You can pass in a list with any combination of module names, and fully qualified class or method names.
-
-Test modules can be specified by file path as well:
-
-python -m unittest tests/test_something.py
-'''
 
 import unittest
 import sys
 sys.path.append('../src/logger')
 import logger
-import logs_database
 
 
 class TestLogger(unittest.TestCase):
     # The setUp() and tearDown() methods allow you to define instructions that will be executed before and after each test method
     def setUp(self):
         # database initialization
-        #self.database = logs_database.LogsDatabase()
+        #self.logger = logger.Logger()
         pass
 
     # provide a tearDown() method that tidies up after the test method has been run
