@@ -1,10 +1,9 @@
 # cd tests
-# python -m test_request_response
+# python -m unittest test_request_response
 
 import unittest
 import test_utils
 
-# setup & teardown look really important
 
 class TestRequestResponse(unittest.TestCase):
     def test_created(self):

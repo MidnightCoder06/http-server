@@ -5,6 +5,7 @@ import unittest
 import sys
 sys.path.append('../src/logger')
 import logger
+import test_utils
 
 
 class TestLogger(unittest.TestCase):
@@ -21,8 +22,7 @@ class TestLogger(unittest.TestCase):
         self.logger.destory_logs()
 
     def test_logger(self):
-        mock_route = {'method_name': 'PUT ', 'repository_path': '{repository}', 'given_object_id': '{mock_object_id}'}
-        self.logger.log(mock_route)
+        self.logger.log(test_utils.mock_update_arg)
         method_name = self.logger.logs[0].values()[0]['method_name']
         path = self.logger.logs[0].values()[0]['path']
         self.assertEqual(method_name, 'PUT ', 'method name does not match')

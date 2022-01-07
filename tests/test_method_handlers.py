@@ -1,7 +1,8 @@
 # cd tests
-# python -m test_method_handlers
+# python -m unittest test_method_handlers
 
 import unittest
+import test_utils
 
 # need to know how to check for custom errors ->  assertRaises()
 # assertRaises(exception, *, msg=None)
