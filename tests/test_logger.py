@@ -1,5 +1,5 @@
 # cd tests
-# python -m test_logger
+# python -m unittest test_logger
 
 import unittest
 import sys
@@ -10,38 +10,20 @@ import logger
 class TestLogger(unittest.TestCase):
     # The setUp() and tearDown() methods allow you to define instructions that will be executed before and after each test method
     def setUp(self):
-        # database initialization
-        #self.logger = logger.Logger()
-        pass
+        # includes database initialization
+        self.logger = logger.Logger()
 
     # provide a tearDown() method that tidies up after the test method has been run
     def tearDown(self):
         '''
         The dispose method provides a way to explicitly release the Python object represented by a PyObject instance. It is a good idea to call Dispose on PyObjects that wrap resources that are limited or need strict lifetime control. Otherwise, references to Python objects will not be released until a managed garbage collection occurs.
         '''
-        #self.database.dispose()
-        pass
+        self.logger.destory_logs()
 
     def test_logger(self):
-        #self.assertEqual('foo'.upper(), 'FOO')
-        pass
-
-'''
-
-import unittest
-
-class WidgetTestCase(unittest.TestCase):
-    def setUp(self):
-        self.widget = Widget('The widget')
-
-    def test_default_widget_size(self):
-        self.assertEqual(self.widget.size(), (50,50),
-                         'incorrect default size')
-
-    def test_widget_resize(self):
-        self.widget.resize(100,150)
-        self.assertEqual(self.widget.size(), (100,150),
-                         'wrong size after resize')
-
-
-'''
+        mock_route = {'method_name': 'PUT ', 'repository_path': '{repository}', 'given_object_id': '{mock_object_id}'}
+        self.logger.log(mock_route)
+        method_name = self.logger.logs[0].values()[0]['method_name']
+        path = self.logger.logs[0].values()[0]['path']
+        self.assertEqual(method_name, 'PUT ', 'method name does not match')
+        self.assertEqual(path, '{repository}', 'path does not match')
