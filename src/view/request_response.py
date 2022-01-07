@@ -1,3 +1,5 @@
+import uuid
+
 class View(object):
     # https://stackabuse.com/pythons-classmethod-and-staticmethod-explained/
     # https://www.programiz.com/python-programming/methods/built-in/staticmethod
@@ -7,7 +9,7 @@ class View(object):
     def created(route):
         response = {}
         response['Status'] = '201 Created'
-        response['oid'] = route.uuid
+        response['oid'] = uuid.uuid4().hex
         print(response)
         return response
 
@@ -15,7 +17,7 @@ class View(object):
     def ok():
         response = {}
         response['Status'] = '200 OK'
-        response['oid'] = route.uuid
+        response['oid'] = uuid.uuid4().hex
         print(response)
         return response
 
