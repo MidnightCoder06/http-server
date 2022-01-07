@@ -9,16 +9,18 @@ storage = repository.Repository().data # global variable where we keep the data
 
 ''' GET
 '''
-def read_item(route):
+def read_item(route, test=False):
     global storage
     route_in_list = [route]
     data = list(filter(lambda x: x['repository_path'] in storage, route_in_list))
     if data:
         print('read', storage[route['repository_path']])
         return storage[route['repository_path']]
-
     else:
-        raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(route['repository_path']))
+        if not test:
+            raise exceptions.PathNotStored('Can\'t read "{}" because it\'s not stored'.format(route['repository_path']))
+        else:
+            return {'failure': 'path not stored'}
 
 
 '''
@@ -104,6 +106,7 @@ def update_item(route):
         print('new storage', storage)
     else:
         raise exceptions.PathNotStored('Can\'t update "{}" because it\'s not stored'.format(route['repository_path']))
+
 
 
 
