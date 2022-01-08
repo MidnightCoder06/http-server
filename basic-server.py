@@ -28,7 +28,7 @@ Without it, there's no way for browsers to tell which part of the response shoul
 
 
 
-# python version-one.py
+# python basic-server.py
 # visit http://127.0.0.1:8888/index.html from your browser
 """
 HTTP servers from scratch.
