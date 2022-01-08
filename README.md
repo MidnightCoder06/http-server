@@ -1,10 +1,6 @@
-how to organize a python project
-how build a database cache layer (ttl, eviction policy)
-backend security (encyption & ssl termination, rate limiting / dos attack, etc...)
-logging service
-how to write unit tests in python
+root level: a basic server taken from a tutorial
+src folder: custom backend code written by me from scratch
 
-dataclass
 
 server concepts
 https://realpython.com/api-integration-in-python/
@@ -16,16 +12,10 @@ https://www.nylas.com/blog/use-python-requests-module-rest-apis/
 https://www.datacamp.com/community/tutorials/making-http-requests-in-python
 https://www.freecodecamp.org/news/how-to-interact-with-web-services-using-python/
 
-
--> Gateway handles incoming requests
--> Route object built
--> mapped to proper place via the 'router' (router holds the functions. mapper calls the functions)
--> only the model can access the database (i.e. insertion ... or if a 'get' then has to go through cache)
-
-
-Gateway benifits
-- reduces roundtrip
-- security layer
-
-
-Keep in mind that we have to use a global variable to store the list of items because its state must be shared across all operations.
+dataclass
+https://zetcode.com/python/dataclass/
+https://www.infoworld.com/article/3563878/how-to-use-python-dataclasses.html
+https://towardsdatascience.com/9-reasons-why-you-should-start-using-python-dataclasses-98271adadc66
+https://realpython.com/python-data-classes/
+https://docs.python.org/3/library/dataclasses.html
+https://www.pythontutorial.net/python-oop/python-dataclass/
