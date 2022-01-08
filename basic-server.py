@@ -134,6 +134,15 @@ class HTTPServer(TCPServer):
             handler = getattr(self, 'handle_%s' % request.method)
             # https://www.programiz.com/python-programming/methods/built-in/getattr
             # https://www.w3schools.com/python/ref_func_getattr.asp
+
+
+            print('request method ->', request.method) # ('request method ->', u'GET')
+                # GET requests don't have a request body
+                # PUT requests always have a body
+                # DELETE requests may have a body, you can do additional parsing if you want
+                    # you can hand off to the appriopriate handlers for each one 
+
+
         except AttributeError:
             handler = self.HTTP_501_handler
 
